@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - ZYNCO</title>
+    <!-- Same Head Resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        zynco: {
+                            black: '#0a0a0a',
+                            dark: '#121212',
+                            gray: '#1e1e1e',
+                            accent: '#3b82f6',
+                            purple: '#8b5cf6',
+                            gold: '#fbbf24'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-nav {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+
+<body class="bg-zynco-black text-white antialiased">
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="index.html" class="text-2xl font-bold tracking-tighter flex items-center gap-2">
+                    <span
+                        class="bg-clip-text text-transparent bg-gradient-to-r from-zynco-accent to-zynco-purple text-3xl">ZYNCO</span>
+                </a>
+                <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+                    <a href="index.html" class="hover:text-white transition-colors">Home</a>
+                    <a href="shop.html" class="hover:text-white transition-colors">Shop</a>
+                    <a href="about.html" class="text-white font-bold border-b-2 border-zynco-accent pb-1">About</a>
+                    <a href="contact.html" class="hover:text-white transition-colors">Contact</a>
+                </div>
+                <!-- Icons -->
+                <div class="flex items-center gap-6">
+                    <button class="relative hover:text-zynco-accent transition-colors" onclick="toggleCart()">
+                        <i class="fa-solid fa-cart-shopping text-lg"></i>
+                        <span id="cart-count"
+                            class="absolute -top-2 -right-2 bg-zynco-accent text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                    </button>
+                    <button class="md:hidden text-2xl" onclick="toggleMenu()">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu"
+        class="fixed inset-0 bg-black/95 z-50 transform translate-x-full transition-transform duration-300 md:hidden flex flex-col justify-center items-center gap-8 text-2xl font-bold">
+        <button class="absolute top-6 right-6 text-3xl text-gray-400 hover:text-white" onclick="toggleMenu()"><i
+                class="fa-solid fa-xmark"></i></button>
+        <a href="index.html" onclick="toggleMenu()">Home</a>
+        <a href="shop.html" onclick="toggleMenu()">Shop</a>
+        <a href="about.html" onclick="toggleMenu()">About</a>
+        <a href="contact.html" onclick="toggleMenu()">Contact</a>
+    </div>
+
+    <!-- Hero -->
+    <section class="min-h-[60vh] flex items-center justify-center relative overflow-hidden pt-20">
+        <div
+            class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-20">
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-t from-zynco-black via-zynco-black/80 to-transparent"></div>
+
+        <div class="container mx-auto px-6 relative z-10 text-center">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6">Our <span
+                    class="bg-clip-text text-transparent bg-gradient-to-r from-zynco-accent to-zynco-purple">Story</span>
+            </h1>
+            <p class="text-xl text-gray-300 max-w-2xl mx-auto">We are ZYNCO. Redefining the connection between
+                technology and lifestyle through premium accessories.</p>
+        </div>
+    </section>
+
+    <!-- Mission -->
+    <section class="py-20 bg-zynco-dark">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="space-y-6">
+                    <h2 class="text-3xl md:text-4xl font-bold text-zynco-accent">Innovating Since 2024</h2>
+                    <p class="text-gray-400 leading-relaxed">
+                        Started in a small garage with a passion for tech, ZYNCO has grown into a leading provider of
+                        high-quality mobile accessories. We noticed that phone cases were either protective and ugly, or
+                        beautiful and flimsy. We set out to change that.
+                    </p>
+                    <p class="text-gray-400 leading-relaxed">
+                        Our mission is simple: To empower your digital life with accessories that don't compromise on
+                        style or substance. Every product we sell is rigorously tested to meet our high standards.
+                    </p>
+                    <div class="grid grid-cols-2 gap-8 pt-4">
+                        <div>
+                            <h3 class="text-4xl font-bold text-white mb-2">50k+</h3>
+                            <p class="text-sm text-gray-500 uppercase tracking-widest">Happy Customers</p>
+                        </div>
+                        <div>
+                            <h3 class="text-4xl font-bold text-white mb-2">100+</h3>
+                            <p class="text-sm text-gray-500 uppercase tracking-widest">Premium Products</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=1000&auto=format&fit=crop"
+                        alt="Team"
+                        class="rounded-2xl shadow-2xl skew-y-3 hover:skew-y-0 transition-all duration-500 border border-white/10">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values -->
+    <section class="py-20 bg-zynco-black">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-16">Why Choose <span class="text-white">ZYNCO?</span></h2>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-zynco-gray p-8 rounded-2xl hover:bg-white/5 transition-colors group">
+                    <div
+                        class="w-16 h-16 bg-zynco-accent/20 rounded-full flex items-center justify-center text-zynco-accent text-2xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Premium Quality</h3>
+                    <p class="text-gray-400">We use only the finest materials, from aircraft-grade aluminum to genuine
+                        leather and impact-resistant polymers.</p>
+                </div>
+
+                <div class="bg-zynco-gray p-8 rounded-2xl hover:bg-white/5 transition-colors group">
+                    <div
+                        class="w-16 h-16 bg-zynco-purple/20 rounded-full flex items-center justify-center text-zynco-purple text-2xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Lightning Fast</h3>
+                    <p class="text-gray-400">From our fast chargers to our shipping times, we know you don't like to
+                        wait. We prioritize speed in everything we do.</p>
+                </div>
+
+                <div class="bg-zynco-gray p-8 rounded-2xl hover:bg-white/5 transition-colors group">
+                    <div
+                        class="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center text-green-400 text-2xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-leaf"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Eco-Friendly</h3>
+                    <p class="text-gray-400">We are committed to sustainability. Our packaging is 100% recyclable and we
+                        offset our carbon footprint.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-white/10 pt-10 pb-10">
+        <div class="container mx-auto px-6 text-center text-gray-500">
+            <p>&copy; 2026 ZYNCO Accessories. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/products.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

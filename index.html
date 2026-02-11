@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZYNCO | Premium Phone Accessories</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS (CDN as requested for no-Node env) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Config for Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        zynco: {
+                            black: '#0a0a0a',
+                            dark: '#121212',
+                            gray: '#1e1e1e',
+                            accent: '#3b82f6', // Bright Blue
+                            purple: '#8b5cf6',
+                            gold: '#fbbf24'
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3b82f6;
+        }
+        
+        .glass-nav {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .hero-gradient {
+            background: radial-gradient(circle at top right, rgba(59, 130, 246, 0.15), transparent 40%),
+                        radial-gradient(circle at bottom left, rgba(139, 92, 246, 0.15), transparent 40%);
+        }
+
+        .product-card:hover .product-action {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-zynco-black text-white antialiased overflow-x-hidden">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <a href="index.html" class="text-2xl font-bold tracking-tighter flex items-center gap-2">
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-zynco-accent to-zynco-purple text-3xl">ZYNCO</span>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+                    <a href="index.html" class="hover:text-white transition-colors text-white">Home</a>
+                    <a href="shop.html" class="hover:text-white transition-colors">Shop</a>
+                    <a href="about.html" class="hover:text-white transition-colors">About</a>
+                    <a href="contact.html" class="hover:text-white transition-colors">Contact</a>
+                </div>
+
+                <!-- Icons -->
+                <div class="flex items-center gap-6">
+                    <button class="relative hover:text-zynco-accent transition-colors" onclick="toggleCart()">
+                        <i class="fa-solid fa-cart-shopping text-lg"></i>
+                        <span id="cart-count" class="absolute -top-2 -right-2 bg-zynco-accent text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                    </button>
+                    <!-- Mobile Menu Button -->
+                    <button class="md:hidden text-2xl" onclick="toggleMenu()">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="fixed inset-0 bg-black/95 z-50 transform translate-x-full transition-transform duration-300 md:hidden flex flex-col justify-center items-center gap-8 text-2xl font-bold">
+            <button class="absolute top-6 right-6 text-3xl text-gray-400 hover:text-white" onclick="toggleMenu()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <a href="index.html" class="hover:text-zynco-accent" onclick="toggleMenu()">Home</a>
+            <a href="shop.html" class="hover:text-zynco-accent" onclick="toggleMenu()">Shop</a>
+            <a href="about.html" class="hover:text-zynco-accent" onclick="toggleMenu()">About</a>
+            <a href="contact.html" class="hover:text-zynco-accent" onclick="toggleMenu()">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Cart Drawer -->
+    <div id="cart-drawer" class="fixed inset-y-0 right-0 w-full md:w-96 bg-zynco-dark z-[60] transform translate-x-full transition-transform duration-300 border-l border-white/10 shadow-2xl">
+        <div class="h-full flex flex-col">
+            <div class="p-6 border-b border-white/10 flex justify-between items-center">
+                <h2 class="text-xl font-bold">Your Cart</h2>
+                <button onclick="toggleCart()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            
+            <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4">
+                <!-- Cart items will be injected here -->
+                <div class="text-center text-gray-500 mt-10">Your cart is empty</div>
+            </div>
+
+            <div class="p-6 border-t border-white/10 bg-zynco-gray">
+                <div class="flex justify-between mb-4 text-lg font-bold">
+                    <span>Total</span>
+                    <span id="cart-total">$0.00</span>
+                </div>
+                <button class="w-full bg-zynco-accent hover:bg-blue-600 text-white font-bold py-3 rounded-lg transition-all" onclick="checkout()">
+                    Checkout
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center relative overflow-hidden hero-gradient pt-20">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-[0.03]"></div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6 animate-fade-in-up">
+                    <div class="inline-block px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-zynco-accent text-sm font-medium mb-2">
+                        🚀 New Collection 2026
+                    </div>
+                    <h1 class="text-5xl md:text-7xl font-bold leading-tight">
+                        Elevate Your <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-zynco-accent to-zynco-purple typing-effect">Mobile Experience</span>
+                    </h1>
+                    <p class="text-gray-400 text-lg md:text-xl max-w-lg">
+                        Discover premium accessories designed for performance and style. From ultra-protection cases to lightning-fast chargers.
+                    </p>
+                    <div class="flex gap-4 pt-4">
+                        <a href="shop.html" class="px-8 py-4 bg-white text-black font-bold rounded-lg hover:bg-gray-200 transition-all transform hover:scale-105">
+                            Shop Now
+                        </a>
+                        <a href="#featured" class="px-8 py-4 bg-white/5 border border-white/10 text-white font-bold rounded-lg hover:bg-white/10 transition-all">
+                            View Collections
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="relative hidden md:block">
+                    <!-- Decorative Circles -->
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-zynco-accent/20 rounded-full blur-3xl"></div>
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-zynco-purple/20 rounded-full blur-3xl animate-pulse-slow"></div>
+                    
+                    <!-- Hero Image -->
+                    <img src="https://images.unsplash.com/photo-1603539278912-74895ee5e7fc?q=80&w=1000&auto=format&fit=crop" alt="Premium Headphones" class="relative z-10 w-full max-w-lg mx-auto drop-shadow-2xl animate-float rounded-2xl border-2 border-white/5">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="py-20 bg-zynco-black">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">Shop by <span class="text-zynco-accent">Category</span></h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Category 1 -->
+                <div class="group relative overflow-hidden rounded-2xl h-80 cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1592434134753-a70baf77540d?q=80&w=800&auto=format&fit=crop" alt="Cases" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-8">
+                        <h3 class="text-2xl font-bold mb-2">Protective Cases</h3>
+                        <p class="text-gray-400 mb-4 text-sm">Military-grade protection with style</p>
+                        <span class="text-zynco-accent font-medium group-hover:underline">Explore <i class="fa-solid fa-arrow-right ml-2"></i></span>
+                    </div>
+                </div>
+
+                <!-- Category 2 -->
+                <div class="group relative overflow-hidden rounded-2xl h-80 cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1616348436168-de43ad0db179?q=80&w=800&auto=format&fit=crop" alt="Chargers" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-8">
+                        <h3 class="text-2xl font-bold mb-2">Fast Chargers</h3>
+                        <p class="text-gray-400 mb-4 text-sm">Power up in minutes, not hours</p>
+                        <span class="text-zynco-accent font-medium group-hover:underline">Explore <i class="fa-solid fa-arrow-right ml-2"></i></span>
+                    </div>
+                </div>
+
+                <!-- Category 3 -->
+                <div class="group relative overflow-hidden rounded-2xl h-80 cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1546435770-a3e426bf472b?q=80&w=800&auto=format&fit=crop" alt="Audio" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-8">
+                        <h3 class="text-2xl font-bold mb-2">Premium Audio</h3>
+                        <p class="text-gray-400 mb-4 text-sm">Immersive sound experiences</p>
+                        <span class="text-zynco-accent font-medium group-hover:underline">Explore <i class="fa-solid fa-arrow-right ml-2"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section id="featured" class="py-20 bg-zynco-dark">
+        <div class="container mx-auto px-6">
+            <div class="flex justify-between items-end mb-12">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Trending <span class="text-zynco-purple">Now</span></h2>
+                    <p class="text-gray-400">Our best-selling accessories this week</p>
+                </div>
+                <a href="shop.html" class="hidden md:block text-zynco-accent hover:text-white transition-colors">View All Products <i class="fa-solid fa-arrow-right ml-1"></i></a>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" id="featured-products-grid">
+                <!-- Products will be injected via JS, but here is a static placeholder for structure -->
+                <!-- Static Item 1 -->
+                <div class="bg-zynco-gray rounded-xl overflow-hidden group hover:shadow-xl hover:shadow-zynco-accent/10 transition-all duration-300 product-card">
+                    <div class="relative h-64 bg-white/5 p-4 flex items-center justify-center overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?q=80&w=600&auto=format&fit=crop" alt="Product" class="h-48 object-contain transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute top-3 right-3 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">HOT</div>
+                        
+                        <!-- Quick Actions -->
+                        <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 opacity-0 transform translateY(10px) transition-all duration-300 product-action">
+                            <button class="bg-white text-black w-10 h-10 rounded-full flex items-center justify-center hover:bg-zynco-accent hover:text-white transition-colors" onclick="addToCart(1)">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                            <button class="bg-white text-black w-10 h-10 rounded-full flex items-center justify-center hover:bg-zynco-accent hover:text-white transition-colors">
+                                <i class="fa-regular fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <p class="text-gray-400 text-xs mb-1">Apple Accessories</p>
+                        <h3 class="font-bold text-lg mb-2 truncate">iPhone 15 Pro Max Clear Case</h3>
+                        <div class="flex justify-between items-center">
+                            <span class="text-zynco-accent font-bold text-xl">$29.99</span>
+                            <div class="flex text-zynco-gold text-xs">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star-half-stroke"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Static Item 2 -->
+                <div class="bg-zynco-gray rounded-xl overflow-hidden group hover:shadow-xl hover:shadow-zynco-accent/10 transition-all duration-300 product-card">
+                    <div class="relative h-64 bg-white/5 p-4 flex items-center justify-center overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1583863788434-e58a36330cf0?q=80&w=600&auto=format&fit=crop" alt="Product" class="h-48 object-contain transition-transform duration-500 group-hover:scale-110">
+                        
+                        <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 opacity-0 transform translateY(10px) transition-all duration-300 product-action">
+                            <button class="bg-white text-black w-10 h-10 rounded-full flex items-center justify-center hover:bg-zynco-accent hover:text-white transition-colors" onclick="addToCart(2)">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                            <button class="bg-white text-black w-10 h-10 rounded-full flex items-center justify-center hover:bg-zynco-accent hover:text-white transition-colors">
+                                <i class="fa-regular fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <p class="text-gray-400 text-xs mb-1">Audio</p>
+                        <h3 class="font-bold text-lg mb-2 truncate">Sony WH-1000XM5</h3>
+                        <div class="flex justify-between items-center">
+                            <span class="text-zynco-accent font-bold text-xl">$348.00</span>
+                            <div class="flex text-zynco-gold text-xs">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                 <!-- Static Item 3 -->
+                 <div class="bg-zynco-gray rounded-xl overflow-hidden group hover:shadow-xl hover:shadow-zynco-accent/10 transition-all duration-300 product-card">
+                    <div class="relative h-64 bg-white/5 p-4 flex items-center justify-center overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1622431062669-ed38267b6de5?q=80&w=600&auto=format&fit=crop" alt="Product" class="h-48 object-contain transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute top-3 right-3 bg-zynco-accent text-white text-xs font-bold px-2 py-1 rounded">-20%</div>
+                        <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 opacity-0 transform translateY(10px) transition-all duration-300 product-action">
+                            <button class="bg-white text-black w-10 h-10 rounded-full flex items-center justify-center hover:bg-zynco-accent hover:text-white transition-colors" onclick="addToCart(3)">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                            <button class="bg-white text-black w-10 h-10 rounded-full flex items-center justify-center hover:bg-zynco-accent hover:text-white transition-colors">
+                                <i class="fa-regular fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <p class="text-gray-400 text-xs mb-1">Chargers</p>
+                        <h3 class="font-bold text-lg mb-2 truncate">MagSafe Wireless Charger</h3>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-zynco-accent font-bold text-xl">$39.00</span>
+                                <span class="text-gray-500 text-sm line-through ml-2">$49</span>
+                            </div>
+                            <div class="flex text-zynco-gold text-xs">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-regular fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                 <!-- Static Item 4 -->
+                 <div class="bg-zynco-gray rounded-xl overflow-hidden group hover:shadow-xl hover:shadow-zynco-accent/10 transition-all duration-300 product-card">
+                    <div class="relative h-64 bg-white/5 p-4 flex items-center justify-center overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=600&auto=format&fit=crop" alt="Product" class="h-48 object-contain transition-transform duration-500 group-hover:scale-110">
+                        
+                        <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 opacity-0 transform translateY(10px) transition-all duration-300 product-action">
+                            <button class="bg-white text-black w-10 h-10 rounded-full flex items-center justify-center hover:bg-zynco-accent hover:text-white transition-colors" onclick="addToCart(4)">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                            <button class="bg-white text-black w-10 h-10 rounded-full flex items-center justify-center hover:bg-zynco-accent hover:text-white transition-colors">
+                                <i class="fa-regular fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <p class="text-gray-400 text-xs mb-1">Gaming</p>
+                        <h3 class="font-bold text-lg mb-2 truncate">Mobile Game Controller</h3>
+                        <div class="flex justify-between items-center">
+                            <span class="text-zynco-accent font-bold text-xl">$59.99</span>
+                            <div class="flex text-zynco-gold text-xs">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 text-center md:hidden">
+                <a href="shop.html" class="inline-block px-8 py-3 bg-zynco-gray border border-white/10 text-white rounded-lg font-medium">View All Products</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Promo Section -->
+    <section class="py-20 bg-gradient-to-r from-zynco-accent to-zynco-purple relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+        <div class="container mx-auto px-6 relative z-10 flex flex-col md:flex-row items-center justify-between gap-12">
+            <div class="md:w-1/2 text-white">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">Upgrade Your Audio Game</h2>
+                <p class="text-xl mb-8 opacity-90">Get 20% off on all premium wireless headphones this week. Immersive sound meets comfort.</p>
+                <div class="flex gap-4">
+                    <a href="shop.html" class="bg-white text-zynco-accent font-bold px-8 py-4 rounded-lg hover:shadow-lg hover:bg-gray-100 transition-all">Shop Sale</a>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+                <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1000&auto=format&fit=crop" alt="Promo Headphone" class="max-w-xs md:max-w-md drop-shadow-2xl -rotate-12 hover:rotate-0 transition-all duration-500">
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-white/10 pt-20 pb-10">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+                <!-- Col 1 -->
+                <div>
+                    <a href="#" class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-zynco-accent to-zynco-purple mb-6 block">ZYNCO</a>
+                    <p class="text-gray-400 mb-6">Your one-stop destination for premium mobile accessories. Quality, style, and performance delivered.</p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-zynco-accent transition-colors"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-zynco-accent transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-zynco-accent transition-colors"><i class="fa-brands fa-twitter"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Col 2 -->
+                <div>
+                    <h4 class="text-white font-bold text-lg mb-6">Quick Links</h4>
+                    <ul class="space-y-4 text-gray-400">
+                        <li><a href="shop.html" class="hover:text-zynco-accent transition-colors">Shop All</a></li>
+                        <li><a href="#" class="hover:text-zynco-accent transition-colors">New Arrivals</a></li>
+                        <li><a href="#" class="hover:text-zynco-accent transition-colors">Best Sellers</a></li>
+                        <li><a href="#" class="hover:text-zynco-accent transition-colors">Sale</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3 -->
+                <div>
+                    <h4 class="text-white font-bold text-lg mb-6">Support</h4>
+                    <ul class="space-y-4 text-gray-400">
+                        <li><a href="contact.html" class="hover:text-zynco-accent transition-colors">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-zynco-accent transition-colors">Shipping Policy</a></li>
+                        <li><a href="#" class="hover:text-zynco-accent transition-colors">Returns & Exchanges</a></li>
+                        <li><a href="#" class="hover:text-zynco-accent transition-colors">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 4 -->
+                <div>
+                    <h4 class="text-white font-bold text-lg mb-6">Newsletter</h4>
+                    <p class="text-gray-400 mb-4">Subscribe to get special offers and updates.</p>
+                    <form class="flex gap-2">
+                        <input type="email" placeholder="Enter your email" class="bg-white/5 border border-white/10 rounded-lg px-4 py-3 w-full focus:outline-none focus:border-zynco-accent text-white">
+                        <button type="submit" class="bg-zynco-accent px-4 rounded-lg hover:bg-blue-600 transition-colors"><i class="fa-solid fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/10 pt-8 text-center text-gray-500 text-sm">
+                <p>&copy; 2026 ZYNCO Accessories. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/products.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

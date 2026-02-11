@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - ZYNCO | Premium Phone Accessories</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        zynco: {
+                            black: '#0a0a0a',
+                            dark: '#121212',
+                            gray: '#1e1e1e',
+                            accent: '#3b82f6',
+                            purple: '#8b5cf6',
+                            gold: '#fbbf24'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-nav {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .product-card:hover .product-action {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body class="bg-zynco-black text-white antialiased">
+    <!-- Navbar (Same as Index) -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="index.html" class="text-2xl font-bold tracking-tighter flex items-center gap-2">
+                    <span
+                        class="bg-clip-text text-transparent bg-gradient-to-r from-zynco-accent to-zynco-purple text-3xl">ZYNCO</span>
+                </a>
+                <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+                    <a href="index.html" class="hover:text-white transition-colors">Home</a>
+                    <a href="shop.html" class="text-white font-bold border-b-2 border-zynco-accent pb-1">Shop</a>
+                    <a href="about.html" class="hover:text-white transition-colors">About</a>
+                    <a href="contact.html" class="hover:text-white transition-colors">Contact</a>
+                </div>
+                <div class="flex items-center gap-6">
+                    <button class="relative hover:text-zynco-accent transition-colors" onclick="toggleCart()">
+                        <i class="fa-solid fa-cart-shopping text-lg"></i>
+                        <span id="cart-count"
+                            class="absolute -top-2 -right-2 bg-zynco-accent text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                    </button>
+                    <button class="md:hidden text-2xl" onclick="toggleMenu()">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu"
+        class="fixed inset-0 bg-black/95 z-50 transform translate-x-full transition-transform duration-300 md:hidden flex flex-col justify-center items-center gap-8 text-2xl font-bold">
+        <button class="absolute top-6 right-6 text-3xl text-gray-400 hover:text-white" onclick="toggleMenu()"><i
+                class="fa-solid fa-xmark"></i></button>
+        <a href="index.html" onclick="toggleMenu()">Home</a>
+        <a href="shop.html" onclick="toggleMenu()">Shop</a>
+        <a href="about.html" onclick="toggleMenu()">About</a>
+        <a href="contact.html" onclick="toggleMenu()">Contact</a>
+    </div>
+
+    <!-- Cart Drawer -->
+    <div id="cart-drawer"
+        class="fixed inset-y-0 right-0 w-full md:w-96 bg-zynco-dark z-[60] transform translate-x-full transition-transform duration-300 border-l border-white/10 shadow-2xl">
+        <div class="h-full flex flex-col">
+            <div class="p-6 border-b border-white/10 flex justify-between items-center">
+                <h2 class="text-xl font-bold">Your Cart</h2>
+                <button onclick="toggleCart()" class="text-gray-400 hover:text-white"><i
+                        class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4"></div>
+            <div class="p-6 border-t border-white/10 bg-zynco-gray">
+                <div class="flex justify-between mb-4 text-lg font-bold">
+                    <span>Total</span>
+                    <span id="cart-total">$0.00</span>
+                </div>
+                <button
+                    class="w-full bg-zynco-accent hover:bg-blue-600 text-white font-bold py-3 rounded-lg transition-all"
+                    onclick="checkout()">Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page Header -->
+    <header class="pt-32 pb-12 bg-zynco-dark border-b border-white/5">
+        <div class="container mx-auto px-6">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Shop All <span class="text-zynco-accent">Accessories</span>
+            </h1>
+            <p class="text-gray-400 max-w-2xl">Browse our complete collection of premium phone cases, chargers, and
+                audio gear. Filter by category to find exactly what you need.</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="py-12">
+        <div class="container mx-auto px-6 flex flex-col lg:flex-row gap-12">
+
+            <!-- Sidebar Filters -->
+            <aside class="w-full lg:w-1/4 space-y-8">
+                <!-- Search -->
+                <div class="relative">
+                    <input type="text" placeholder="Search products..."
+                        class="w-full bg-zynco-gray border border-white/10 rounded-lg px-4 py-3 pl-10 focus:outline-none focus:border-zynco-accent text-white"
+                        id="search-input">
+                    <i class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"></i>
+                </div>
+
+                <!-- Categories -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4 border-b border-white/10 pb-2">Categories</h3>
+                    <div class="space-y-2" id="category-filters">
+                        <label class="flex items-center gap-3 cursor-pointer hover:text-zynco-accent transition-colors">
+                            <input type="checkbox"
+                                class="form-checkbox bg-zynco-gray border-white/20 rounded text-zynco-accent focus:ring-0"
+                                value="cases">
+                            <span>Phone Cases</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer hover:text-zynco-accent transition-colors">
+                            <input type="checkbox"
+                                class="form-checkbox bg-zynco-gray border-white/20 rounded text-zynco-accent focus:ring-0"
+                                value="chargers">
+                            <span>Chargers & Cables</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer hover:text-zynco-accent transition-colors">
+                            <input type="checkbox"
+                                class="form-checkbox bg-zynco-gray border-white/20 rounded text-zynco-accent focus:ring-0"
+                                value="audio">
+                            <span>Audio & Headphones</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer hover:text-zynco-accent transition-colors">
+                            <input type="checkbox"
+                                class="form-checkbox bg-zynco-gray border-white/20 rounded text-zynco-accent focus:ring-0"
+                                value="gaming">
+                            <span>Gaming Accessories</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Price Range -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4 border-b border-white/10 pb-2">Price Range</h3>
+                    <input type="range" min="0" max="500" value="500" class="w-full accent-zynco-accent mb-2"
+                        id="price-range">
+                    <div class="flex justify-between text-sm text-gray-400">
+                        <span>$0</span>
+                        <span id="price-display">$500</span>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Product Grid -->
+            <div class="w-full lg:w-3/4">
+                <div class="flex justify-between items-center mb-6">
+                    <span class="text-gray-400" id="results-count">Showing all products</span>
+                    <select class="bg-zynco-gray border border-white/10 rounded px-3 py-2 text-sm focus:outline-none"
+                        id="sort-select">
+                        <option value="featured">Featured</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="newest">Newest Arrivals</option>
+                    </select>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="shop-grid">
+                    <!-- Products injected via JS -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer (Same as Index) -->
+    <footer class="bg-black border-t border-white/10 pt-20 pb-10 mt-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+                <!-- Col 1 -->
+                <div>
+                    <a href="#"
+                        class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-zynco-accent to-zynco-purple mb-6 block">ZYNCO</a>
+                    <p class="text-gray-400 mb-6">Your one-stop destination for premium mobile accessories. Quality,
+                        style, and performance delivered.</p>
+                </div>
+            </div>
+            <div class="border-t border-white/10 pt-8 text-center text-gray-500 text-sm">
+                <p>&copy; 2026 ZYNCO Accessories. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/products.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Shop Page Specific Logic
+        const grid = document.getElementById('shop-grid');
+        const searchInput = document.getElementById('search-input');
+        const priceRange = document.getElementById('price-range');
+        const priceDisplay = document.getElementById('price-display');
+        const sortSelect = document.getElementById('sort-select');
+        const categoryCheckboxes = document.querySelectorAll('#category-filters input');
+
+        let currentProducts = [...products];
+
+        function renderProducts(items) {
+            grid.innerHTML = '';
+            document.getElementById('results-count').innerText = `Showing ${items.length} products`;
+
+            if (items.length === 0) {
+                grid.innerHTML = '<div class="col-span-full text-center py-20 text-gray-500 text-lg">No products found matching your criteria.</div>';
+                return;
+            }
+
+            items.forEach(product => {
+                const card = `
+                <div class="bg-zynco-gray rounded-xl overflow-hidden group hover:shadow-xl hover:shadow-zynco-accent/10 transition-all duration-300 product-card border border-white/5">
+                    <div class="relative h-64 bg-white/5 p-4 flex items-center justify-center overflow-hidden">
+                        <img src="${product.image}" alt="${product.name}" class="h-48 object-contain transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 opacity-0 transform translateY(10px) transition-all duration-300 product-action">
+                            <button class="bg-white text-black w-10 h-10 rounded-full flex items-center justify-center hover:bg-zynco-accent hover:text-white transition-colors" onclick="addToCart(${product.id})">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <p class="text-xs text-zynco-accent uppercase tracking-wider mb-1">${product.category}</p>
+                        <h3 class="font-bold text-lg mb-2 truncate">${product.name}</h3>
+                        <div class="flex justify-between items-center">
+                            <span class="text-white font-bold text-xl">$${product.price}</span>
+                            <div class="flex text-zynco-gold text-xs">
+                                ${Array(Math.floor(product.rating)).fill('<i class="fa-solid fa-star"></i>').join('')}
+                                ${product.rating % 1 !== 0 ? '<i class="fa-solid fa-star-half-stroke"></i>' : ''}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                `;
+                grid.innerHTML += card;
+            });
+        }
+
+        function filterProducts() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const maxPrice = priceRange.value;
+            const selectedCategories = Array.from(categoryCheckboxes)
+                .filter(cb => cb.checked)
+                .map(cb => cb.value);
+
+            let filtered = products.filter(p => {
+                const matchesSearch = p.name.toLowerCase().includes(searchTerm) || p.description.toLowerCase().includes(searchTerm);
+                const matchesPrice = p.price <= maxPrice;
+                const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(p.category); // Assuming category property exists and matches values
+                return matchesSearch && matchesPrice && matchesCategory;
+            });
+
+            // Sort
+            const sortValue = sortSelect.value;
+            if (sortValue === 'price-low') {
+                filtered.sort((a, b) => a.price - b.price);
+            } else if (sortValue === 'price-high') {
+                filtered.sort((a, b) => b.price - a.price);
+            }
+            // For 'newest' or 'featured', we might need more data, defaulting to ID order or random for demo
+
+            renderProducts(filtered);
+        }
+
+        // Event Listeners
+        searchInput.addEventListener('input', filterProducts);
+        priceRange.addEventListener('input', (e) => {
+            priceDisplay.innerText = `$${e.target.value}`;
+            filterProducts();
+        });
+        sortSelect.addEventListener('change', filterProducts);
+        categoryCheckboxes.forEach(cb => cb.addEventListener('change', filterProducts));
+
+        // Initial Render
+        renderProducts(products); // Render all products on load
+
+    </script>
+</body>
+
+</html>
